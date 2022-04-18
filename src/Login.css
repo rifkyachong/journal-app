@@ -1,0 +1,31 @@
+#app-container {
+  width: 540px;
+  margin: 0 auto;
+}
+
+#login-area {
+  box-shadow: 0 0.25rem 0.5rem rgb(0 0 0 / 15%);
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+}
+
+#title {
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.form-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.form-label {
+  width: 30%;
+  margin-bottom: 0;
+  font-size: 18px;
+}
+
+.form-input {
+  width: 70%;
+}

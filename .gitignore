@@ -1,0 +1,6 @@
+node_modules/
+private/
+bundle.js
+bundle.js.LICENSE.txt
+bundle.js.map
+.env
