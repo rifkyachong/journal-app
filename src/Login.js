@@ -1,6 +1,8 @@
 import React, { useState } from "react";
+import { StatusCodes } from "http-status-codes";
 import "./Login.css";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 export default function Login() {
   const [username, setUsername] = useState("");
@@ -9,10 +11,12 @@ export default function Login() {
   const login = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("/login", {
+      const response = await axios.post("/auth/login", {
         username,
         password,
       });
+      if (response.status === StatusCodes.CREATED) {
+      }
     } catch (error) {}
   };
 
@@ -59,10 +63,7 @@ export default function Login() {
         </div>
         <div>
           <div className="text-center">
-            Not a member yet?{" "}
-            <a href="/" className="text-decoration-none">
-              Register
-            </a>
+            Not a member yet? <Link to="/register">Register</Link>
           </div>
         </div>
       </form>

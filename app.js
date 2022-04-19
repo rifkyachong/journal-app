@@ -4,8 +4,9 @@ require("express-async-error");
 const express = require("express");
 const connectDB = require("./database/connect");
 const authRouter = require("./router/auth");
+const journalsRouter = require("./router/journals");
 const errorHandler = require("./middleware/error-handler");
-const notFound = require("./middleware/not-found");
+// const notFound = require("./middleware/not-found");
 
 // server metadata
 const app = express();
@@ -17,9 +18,13 @@ app.use(express.json());
 
 // routes
 app.use("/auth", authRouter);
+app.use("/journals", journalsRouter);
+app.use("*", (req, res) => {
+  res.sendFile(process.cwd() + "/public/index.html");
+});
 
 // error handler & not found
-app.use(notFound);
+// app.use(notFound);
 app.use(errorHandler);
 
 // start the server

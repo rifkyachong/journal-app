@@ -1,20 +1,30 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { Link } from "react-router-dom";
 import "./Register.css";
 import axios from "axios";
+import { AuthContext } from "./contexts/AuthContext";
+import { StatusCodes } from "http-status-codes";
 
 export default function Register() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { setUser, setToken } = useContext(AuthContext);
 
   const register = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("/register", {
+      const response = await axios.post("/auth/register", {
         username,
         email,
         password,
       });
+      if (response.status === StatusCodes.CREATED) {
+        const { username, token } = response.data;
+        setUser(username);
+        setToken(token);
+        window.location.href = "/dashboard";
+      }
     } catch (error) {}
   };
 
@@ -75,10 +85,7 @@ export default function Register() {
         </div>
         <div>
           <div className="text-center">
-            Already have an account?{" "}
-            <a href="/" className="text-decoration-none">
-              Login
-            </a>
+            Already have an account? <Link to="/login">Login</Link>
           </div>
         </div>
       </form>
