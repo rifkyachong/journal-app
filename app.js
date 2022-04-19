@@ -1,11 +1,12 @@
 // pre-process (all imports)
 require("dotenv").config();
-require("express-async-error");
+require("express-async-errors");
 const express = require("express");
 const connectDB = require("./database/connect");
 const authRouter = require("./router/auth");
 const journalsRouter = require("./router/journals");
 const errorHandler = require("./middleware/error-handler");
+const authentication = require("./middleware/authentication");
 // const notFound = require("./middleware/not-found");
 
 // server metadata
@@ -18,7 +19,7 @@ app.use(express.json());
 
 // routes
 app.use("/auth", authRouter);
-app.use("/journals", journalsRouter);
+app.use("/journals", authentication, journalsRouter);
 app.use("*", (req, res) => {
   res.sendFile(process.cwd() + "/public/index.html");
 });

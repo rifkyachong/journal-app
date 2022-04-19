@@ -25,7 +25,9 @@ export default function Register() {
         setToken(token);
         window.location.href = "/dashboard";
       }
-    } catch (error) {}
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (

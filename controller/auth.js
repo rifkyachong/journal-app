@@ -10,13 +10,13 @@ const register = async (req, res) => {
   res.status(StatusCodes.CREATED).json({ username: user.username, token });
 };
 
-const login = async (req, res) => {
-  const { email, password } = req.body;
-  if (!email || !password) {
+const login = async (req, res, next) => {
+  const { username, password } = req.body;
+  if (!username || !password) {
     throw new BadRequestError("Please provide email and password");
   }
 
-  const user = await User.find({ email });
+  const user = await User.findOne({ username });
 
   if (!user) {
     throw new UnauthenticatedError("User hasn't been registered");
@@ -29,7 +29,7 @@ const login = async (req, res) => {
 
   const token = user.generateToken();
 
-  res.json({ token });
+  res.json({ username: user.username, token });
 };
 
 module.exports = { register, login };

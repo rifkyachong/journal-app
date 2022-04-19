@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
+const { UnauthenticatedError } = require("../error");
 
 const userSchema = new mongoose.Schema({
   username: {
@@ -32,18 +33,17 @@ userSchema.pre("save", async function (next) {
   next();
 });
 
-userSchema.post("save", function (error, doc, next) {
-  console.log(error);
-  if (error.name === "MongoServerError" && error.code === 11000) {
-    next(error);
-  } else {
-    next();
-  }
-});
+// userSchema.post("save", function (error, doc, next) {
+//   if (error.name === "MongoServerError" && error.code === 11000) {
+//     next(new UnauthenticatedError("mongo server is to blame!!"));
+//   } else {
+//     next();
+//   }
+// });
 
 userSchema.methods.generateToken = function () {
   return jwt.sign(
-    { userId: this._id, name: this.name },
+    { userId: this._id, username: this.username },
     process.env.JWT_SECRET,
     { expiresIn: process.env.JWT_LIFETIME }
   );
