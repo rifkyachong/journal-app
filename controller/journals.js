@@ -23,7 +23,7 @@ getJournal = async (req, res, next) => {
 
   const journal = await Journal.findOne({ createdBy: userId, _id: journalId });
   if (!journal) {
-    return next(new NotFoundError(`no journal with id:${id}`));
+    return next(new NotFoundError(`no journal with id:${journalId}`));
   }
 
   res.status(StatusCodes.OK).json(journal);
